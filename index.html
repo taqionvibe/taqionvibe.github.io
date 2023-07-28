@@ -159,13 +159,13 @@
             </div>
             
             <div class="contact-right">
-                <form>
+                <form id="form">
                     <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Your E-mail" required>
+                    <input type="email" name="Email" placeholder="Your E-mail" required>
                     <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
-                    <button type="submit" class="btn btn2">Submit</button>
+                    <button type="submit" class="btn btn2" id="submit">Submit</button>
                 </form>
-                <!-- <span id="msg"></span> -->
+                <span id="msg"></span>
             </div>
         </div>
     </div>
@@ -204,7 +204,26 @@
     }
 
 </script>
+<script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxOIcRvAhOJhPh_HNJf7nhVS9NqZPz4H0A-GLB-xtx0bfZgL9MN7FG_7S1aWxclgW-VNg/exec"
+    const form = document.querySelector('#form')
+    const msg = document.getElementById("msg")
 
+    form.addEventListener('submit', e=> {
+        e.preventDefault()
+
+        console.log(form)
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => {
+            msg.innerHTML = "Message sent Successfully"
+            setTimeout(function(){
+                msg.innerHTML = ""
+            },5000)
+            form.reset()
+        })
+        .catch(error => alert('Poor internet connection!', error.message))
+    })
+</script>
     
 </body>
 </html>
